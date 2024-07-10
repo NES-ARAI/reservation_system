@@ -75,8 +75,8 @@ app.post('/reserve', (req, res) => {
                 const transporter = nodemailer.createTransport({
                     service: 'gmail',
                     auth: {
-                        user: 'nes.yuichi.arai@gmail.com', // 自分のGmailアドレス
-                        pass: 'zgrzjotudavbztse' // 生成したアプリパスワード
+                        user: process.env.GMAIL_USER, // 環境変数を使用
+                        pass: process.env.GMAIL_PASS // 環境変数を使用
                     }
                 });
 
