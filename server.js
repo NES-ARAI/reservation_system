@@ -16,10 +16,12 @@ app.get('/', (req, res) => {
 });
 
 app.get('/login', (req, res) => {
+    console.log('Login page requested');
     res.sendFile(path.join(__dirname, 'public', 'login.html'));
 });
 
 app.get('/admin', (req, res) => {
+    console.log('Admin page requested');
     res.sendFile(path.join(__dirname, 'public', 'admin.html'));
 });
 
@@ -75,8 +77,8 @@ app.post('/reserve', (req, res) => {
                 const transporter = nodemailer.createTransport({
                     service: 'gmail',
                     auth: {
-                        user: process.env.GMAIL_USER, // 環境変数を使用
-                        pass: process.env.GMAIL_PASS // 環境変数を使用
+                        user: process.env.GMAIL_USER, // 環境変数から取得
+                        pass: process.env.GMAIL_PASS // 環境変数から取得
                     }
                 });
 
@@ -100,9 +102,10 @@ app.post('/reserve', (req, res) => {
 
                 transporter.sendMail(mailOptions, function(error, info) {
                     if (error) {
-                        console.log(error);
+                        console.log('Error sending email:', error);
                         res.status(500).json({ error: '予約は完了しましたが、確認メールの送信に失敗しました' });
                     } else {
+                        console.log('Email sent:', info.response);
                         res.json({ id: this.lastID });
                     }
                 });
